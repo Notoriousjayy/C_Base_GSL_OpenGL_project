@@ -1,0 +1,21 @@
+# Ignore build directories
+cmake-build-debug/
+
+# Ignore build files and cache
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+GSL_and_OpenGL.cbp
+
+# Ignore temporary and log files
+*.log
+*.txt
+*.marks
+*.d
+
+# Ignore coverage data
+coverage
+
+# Ignore backup files
+*~
