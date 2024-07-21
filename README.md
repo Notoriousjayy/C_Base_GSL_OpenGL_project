@@ -555,6 +555,7 @@ int main() {
 ### Electronics
 
 #### RL and RC Circuit Proportions
+If the resistance in the RL circuit is zero, show that the current I(t) is directly proportional to the integral of the applied voltage E(t). Similarly show that if the resistance in the RC circuit is zero, the current is directly proportional to the derivative of the applied voltage. (In engineering applications, it is often necessary to generate a voltage, rather than a current, which is the integral or derivative of another voltage.)
 ```c
 #include <stdio.h>
 #include "circuit.h"
@@ -577,6 +578,7 @@ int main() {
 }
 ```
 #### Power Laws for Circuits
+The power generated or dissipated by a circuit element equals the voltage across the element times the current through the element. Show that the power dissipated by a resistor equals **I^2** R, the power associated with an inductor equals the derivative of **(1/2) LI^2**, and the power associated with a capacitor equals the derivative of (1/2)C(E^2)_E.
 ```c
 #include <stdio.h>
 #include "power_calculation.h"
@@ -619,6 +621,22 @@ int main() {
 ```
 
 #### Power Balance in Circuits (RL)
+Derive a power balance equation for the RL and RC circuits. Discuss the significance of the signs of the three power terms.
+### Significance of the Signs of the Power Terms
+
+- **Source Power (\(P(t)\)):**
+    - Positive when power is supplied to the circuit.
+
+- **Resistive Power (\(P_R(t)\)):**
+    - Always positive since it represents the power dissipated as heat in the resistor.
+
+- **Inductive Power (\(P_L(t)\)):**
+    - Can be positive or negative. Positive when energy is being stored in the magnetic field of the inductor and negative when energy is being released from the inductor back to the circuit.
+
+- **Capacitive Power (\(P_C(t)\)):**
+    - Can be positive or negative. Positive when energy is being stored in the electric field of the capacitor and negative when energy is being released from the capacitor back to the circuit.
+
+In summary, the signs of the power terms indicate the direction of energy flow: resistors always dissipate energy, while inductors and capacitors can either store or release energy depending on the current and voltage relationships at any given time.
 ```c
 #include <stdio.h>
 #include <gsl/gsl_odeiv2.h>
@@ -657,6 +675,22 @@ int main() {
 ```
 
 #### Power Balance in Circuits (RC)
+Derive a power balance equation for the RL and RC circuits. Discuss the significance of the signs of the three power terms.
+### Significance of the Signs of the Power Terms
+
+- **Source Power (\(P(t)\)):**
+    - Positive when power is supplied to the circuit.
+
+- **Resistive Power (\(P_R(t)\)):**
+    - Always positive since it represents the power dissipated as heat in the resistor.
+
+- **Inductive Power (\(P_L(t)\)):**
+    - Can be positive or negative. Positive when energy is being stored in the magnetic field of the inductor and negative when energy is being released from the inductor back to the circuit.
+
+- **Capacitive Power (\(P_C(t)\)):**
+    - Can be positive or negative. Positive when energy is being stored in the electric field of the capacitor and negative when energy is being released from the capacitor back to the circuit.
+
+In summary, the signs of the power terms indicate the direction of energy flow: resistors always dissipate energy, while inductors and capacitors can either store or release energy depending on the current and voltage relationships at any given time.
 ```c
 #include <stdio.h>
 #include <gsl/gsl_odeiv2.h>
@@ -695,6 +729,7 @@ int main() {
 ```
 
 #### Time for RL Circuit
+An industrial electromagnet can be modeled as an RL circuit, while it is being energized with a voltage source. If the inductance is 10 H and the wire windings contain 3 Ω of resistance, how long does it take a constant applied voltage to energize the electromagnet to within 90% of its final value (that is, the current equals 90% of its asymptotic value)?
 ```c
 #include <stdio.h>
 #include "rl_circuit.h"
@@ -714,6 +749,7 @@ int main() {
 ```
 
 #### Capacitor Discharge Time
+A 10⁻⁸-F capacitor (10 nanofarads) is charged to 50 V and then disconnected. One can model the charge leakage of the capacitor with an RC circuit with no voltage source and the resistance of the air between the capacitor plates. On a cold dry day, the resistance of the air gap is 5 × 10¹³ Ω; on a humid day, the resistance is 7 × 10⁶ Ω. How long will it take the capacitor voltage to dissipate to half its original value on each day?
 ```c
 #include <stdio.h>
 #include "dissipation.h"
@@ -735,6 +771,7 @@ int main() {
 ```
 
 #### Rate Change R Calculation
+**Electricity** The combined electrical resistance **R** of two resistors **R_1** and **R_2**, connected in parallel, is given by **1/R = 1/R_1 + 1/R_2** where R, R_1, and R_2 are measured in ohms. R_1 and R_2 are increasing at rates of 1 and 1.5 ohms per second, respectively. At what rate is R changing when R_1 = 50 ohms and R_2 = 75 ohms?
 ```c
 #include <stdio.h>
 #include "resistance.h"
@@ -757,6 +794,7 @@ int main() {
 ```
 
 #### Current Rate Given Voltages
+**Electrical Circuit** The voltage V in volts of an electrical circuit is V = IR, where R is the resistance in ohms and I is the current in amperes. R is increasing at a rate of 2 ohms per second, and V is increasing at a rate of 3 volts per second. At what rate is I changing when V = 12 volts and R = 4 ohms?
 ```c
 #include "related_rates.h"
 
@@ -774,6 +812,11 @@ int main() {
 ```
 
 #### Rate of Parallel Resistance
+**Electricity** The combined electrical resistance R of two resistors R_1 and R_2, connected in parallel, is given by
+
+1/R = 1/R_1 + 1/R_2
+
+where R, R_1, and R_2 are measured in ohms. R_1 and R_2 are increasing at rates of 1 and 1.5 ohms per second, respectively. At what rate is R changing when R_1 = 50 ohms and R_2 = 75 ohms?
 ```c
 #include <stdio.h>
 #include "resistance.h"
@@ -802,6 +845,7 @@ int main() {
 ```
 
 #### Current Calculation L'Hôpital
+**Electric Circuit** If voltage V is first applied at time t = 0, then the current I flowing through the circuit at time t is given by I =V/R(1 - e^{-Rt/L) where L is the inductance and R is the resistance. Use L'Hôpital's Rule to find the formula for the current by fixing V and L and letting R approach 0 from the right.
 ```c
 #include <stdio.h>
 #include "current.h"
@@ -824,6 +868,12 @@ int main() {
 ```
 
 #### Circuit Current and Limit
+**Electric Circuit** A model of the current I, in amperes (A), at time t is given by the first-order differential equation: L dI/dt + RI = E(t) where E(t) is the voltage (V) produced by the power source, R is the resistance, in ohms Ω, and L is the inductance, in henrys (H). Suppose the electric circuit consists of a 24-V power source, a 12-Ω resistor, and a 4-H inductor.
+
+**a** Sketch a slope field for the differential equation.
+
+**b** What is the limiting value of the current?
+
 ```c
 #include <stdio.h>
 #include <gsl/gsl_odeiv2.h>
@@ -877,6 +927,7 @@ int main(void) {
 ```
 
 #### Electric Circuit Differential Equation
+**Electric Circuit** Find the current I as a function of time t (in seconds), given that I satisfies the differential equation L dI/dt + RI = sin(2t) where R and L are nonzero constants.
 ```c
 #include <stdio.h>
 #include <gsl/gsl_odeiv2.h>
@@ -927,6 +978,7 @@ int main() {
 ```
 
 #### Work Done Moving Electrons
+**Electric Force** Two electrons repel each other with a force that varies inversely as the square of the distance between them. One electron is fixed at the point (2, 4). Find the work done in moving the second electron from (-2, 4) to (1, 4).
 ```c
 #include <stdio.h>
 #include "electron_work.h"
@@ -944,6 +996,14 @@ return 0;
 ```
 
 #### Electric force fields summary
+**Electric force fields are defined by Coulomb's Law, which states that the force exerted on a particle with electric charge q_1 located at (x, y, z) by a particle with electric charge q_2 located at (0, 0, 0) is** F(x, y, z) = (cq_1 q_2 / ||r||^2)u where r = xi + yj + zk, u = r/ ||r||, and c is a constant that depends on the choice of units for ||r||, q_1, and q_2.**
+
+**Note that an electric force field has the same form as a gravitational field. That is,**
+
+F(x, y, z) = (k/ ||r||)^2)u
+
+**Such a force field is called an inverse square field.**
+
 ```c
 #include <stdio.h>
 #include "coulomb_force.h"
@@ -978,6 +1038,9 @@ int main() {
 ```
 
 #### Equipotential Curves for Voltages
+**Electric Potential** The electric potential V at any point (x, y) is V(x, y) = 5/sqrt(25 + x^2 + y^2)
+Sketch the equipotential curves for V = 1/2, V = 1/3, and V = 1/4.
+
 ```c
 #include <stdio.h>
 #include <math.h>
@@ -1020,6 +1083,8 @@ int main() {
 ```
 
 #### Max Percent Error Calculation
+**Power** Electrical power P is given by P = E^2/R where E is voltage and R is resistance. Approximate the maximum percent error in calculating power when 120 volts is applied to a 2000-ohm resistor and the possible percent errors in measuring E and R are 3% and 4%, respectively.
+
 ```c
 #include <stdio.h>
 #include "power_calculation.h"
@@ -1045,6 +1110,8 @@ int main() {
 ```
 
 #### Approximate Inductance with Given Values
+**Inductance** The inductance L (in microhenrys) of a straight nonmagnetic wire in free space is  L = 0.00021(ln( 2h/r - 0.75)) where h is the length of the wire in millimeters and r is the radius of a circular cross section. Approximate L when r = 2 +- 1/16 millimeters} and h = 100 +- 1/100 millimeters.
+
 ```c
 #include <stdio.h>
 #include "inductance.h"
@@ -1065,6 +1132,13 @@ int main() {
 ```
 
 #### Average Current Calculations
+**Electricity** The oscillating current in an electrical circuit is I = 2 sin(60πt) + cos(120πt) where I is measured in amperes and t is measured in seconds. Find the average current for each time interval.
+
+(a) 0 <= t <= 1/60
+
+(b) 0 <= t <= 1/240
+
+(c) 0 <= t <= 1/30
 ```c
 #include <stdio.h>
 #include "current.h"
@@ -1102,6 +1176,8 @@ int main() {
 ```
 
 #### Magnetic Potential Calculation
+**Electromagnetic Theory** The magnetic potential P at a point on the axis of a circular coil is given by P = 2π NIr/k ∫_c^∞ 1/((r^2 + x^2)^3/2) dx where N, I, r, k, and c are constants. Find P.
+
 ```c
 #include <stdio.h>
 #include <math.h>
@@ -1132,6 +1208,15 @@ int main() {
 ```
 
 #### Current Solution and Analysis
+**Electric Circuits** use the differential equation for electric circuits given by
+
+L dI/dt + RI = E
+
+In this equation, I is the current, R is the resistance, L is the inductance, and E is the electromotive force (voltage).
+
+Solve the differential equation for the current given a constant voltage E_0.
+
+Use the result to find the equation for the current when I(0) = 0, E_0 = 120 volts, R = 600 ohms, and L = 4 henrys. When does the current reach 90% of its limiting value?
 ```c
 #include <stdio.h>
 #include "current.h"
@@ -1170,7 +1255,8 @@ int main() {
 }
 ```
 
-#### Current Solution and Analysis
+#### RL Circuit Response
+An RL circuit with a 5-Ω resistor and a 0.05-H inductor carries a current of 1 A at t = 0, at which time a voltage source E(t) = 5 cos 120t V is added. Determine the subsequent inductor current and voltage.
 ```c
 #include <stdio.h>
 #include <gsl/gsl_odeiv2.h>
@@ -1220,6 +1306,8 @@ int main(void) {
 ```
 
 #### RC Circuit Solution
+An RC circuit with a 1-Ω resistor and a 0.000001-F capacitor is driven by a voltage **E(t) = sin(100t) V**. If the initial capacitor voltage is zero, determine the subsequent resistor and capacitor voltages and the current.
+
 ```c
 #include <stdio.h>
 #include <gsl/gsl_odeiv2.h>
@@ -1278,6 +1366,7 @@ int main() {
 ```
 
 #### RC Circuit Time Calculation
+The voltage source models the transmitting gate, and the capacitor models the receiving gate. Typically, the resistance is 100 Ω, and the capacitance is very small, **10^-12 F** (1 picofarad, pF). If the capacitor is initially uncharged and the transmitting gate changes instantaneously from 0 to 5 V, how long will it take for the voltage at the receiving gate to reach 3 V?
 ```c
 #include <stdio.h>
 #include "Circuits/rc_circuit.h"
@@ -1297,6 +1386,90 @@ int main() {
 
     return 0;
 }
+```
+
+#### Pressure Calculation at Altitude
+**Air Pressure** Under ideal conditions, air pressure decreases continuously with the height above sea level at a rate proportional to the pressure at that height. The barometer reads 30 inches at sea level and 15 inches at 18,000 feet. Find the barometric pressure at 35,000 feet.
+```c
+#include <stdio.h>
+#include "Physics/barometric_pressure.h"
+#define HEIGHT_35000       35000 // Height at 35000 feet in feet
+
+int main() {
+    double k = find_k();
+    double pressure_at_35000 = compute_pressure(k, HEIGHT_35000);
+    printf("The barometric pressure at 35,000 feet is approximately %.2f inches\n", pressure_at_35000);
+    return 0;
+}
+```
+
+#### Minimum Resistance at T
+**Electrical Resistance** The resistance **R** of a certain type of resistor is given by the formula: **R = sqrt(0.001T^4 - 4T + 100) where **R** is measured in ohms and the temperature **T** is measured in degrees Celsius.
+
+**a.** Find **dR/dT** and the critical number of the function. Determine the minimum resistance for this type of resistor.
+
+**b.** Graph the function **R** and use the graph to approximate the minimum resistance for this type of resistor.
+
+```c
+#include <stdio.h>
+#include <gsl/gsl_math.h>
+#include <gsl/gsl_deriv.h>
+#include "Circuits/resistance.h"
+
+int main() {
+    gsl_function F;
+    double result, abserr;
+
+    // Using GSL to find the derivative at a point
+    F.function = &resistance_derivative;
+    F.params = NULL;
+
+    double T_critical = 10.0; // Critical point we found analytically
+    double R_min = resistance_at_temperature(T_critical, NULL); // Minimum resistance at T = 10
+
+    printf("Critical Temperature (T): %g\n", T_critical);
+    printf("Minimum Resistance (R) at T = %g: %g ohms\n", T_critical, R_min);
+
+    // Using GSL to numerically differentiate at the critical point
+    gsl_deriv_central(&F, T_critical, 1e-8, &result, &abserr);
+
+    printf("Numerical derivative dR/dT at T = %g: %g\n", T_critical, result);
+    printf("Estimated error: %g\n", abserr);
+
+    return 0;
+}
+```
+
+#### Change in resistance
+**Resistance** The total resistance **R** (in ohms) of two resistors connected in parallel is given by **1/R= 1/R1+ 1/R_2**. Approximate the change in **R** as **R_1** is increased from 10 ohms to 10.5 ohms and **R_2** is decreased from 15 ohms to 13 ohms.
+```c
+#include <stdio.h>
+#include "Circuits/resistance.h"
+
+int main() {
+    // Initial resistances
+    double R1_initial = 10.0;
+    double R2_initial = 15.0;
+
+    // New resistances
+    double R1_new = 10.5;
+    double R2_new = 13.0;
+
+    // Calculate initial total resistance
+    double R_initial = calculate_resistance(R1_initial, R2_initial);
+    printf("Initial total resistance: %.2f ohms\n", R_initial);
+
+    // Calculate new total resistance
+    double R_new = calculate_resistance(R1_new, R2_new);
+    printf("New total resistance: %.2f ohms\n", R_new);
+
+    // Calculate change in total resistance
+    double delta_R = R_new - R_initial;
+    printf("Change in total resistance: %.2f ohms\n", delta_R);
+
+    return 0;
+}
+
 ```
 
 ### Graphics
