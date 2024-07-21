@@ -1217,5 +1217,203 @@ int main(void) {
 
     return 0;
 }
+```
+
+#### RC Circuit Solution
+```c
+#include <stdio.h>
+#include <gsl/gsl_odeiv2.h>
+#include <gsl/gsl_errno.h>
+#include "Circuits/rc_circuit.h"
+
+#define R 1.0
+#define C 0.000001
+#define OMEGA 100.0
+
+int main() {
+    // Define the ODE system
+    gsl_odeiv2_system sys = {rc_circuit_func, jac, 1, NULL};
+
+    // Define the step type and step object
+    gsl_odeiv2_step *step = gsl_odeiv2_step_alloc(gsl_odeiv2_step_rkf45, 1);
+    gsl_odeiv2_control *control = gsl_odeiv2_control_y_new(1e-6, 0.0);
+    gsl_odeiv2_evolve *evolve = gsl_odeiv2_evolve_alloc(1);
+
+    double t = 0.0, t1 = 1.0; // Time range
+    double h = 1e-6; // Initial step size
+    double y[1] = {0.0}; // Initial condition for V_C(t)
+
+    // Open a file to save results
+    FILE *fp = fopen("rc_circuit_output.txt", "w");
+    if (fp == NULL) {
+        fprintf(stderr, "Error opening file\n");
+        return 1;
+    }
+
+    // Time stepping loop
+    while (t < t1) {
+        int status = gsl_odeiv2_evolve_apply(evolve, control, step, &sys, &t, t1, &h, y);
+        if (status != GSL_SUCCESS) {
+            fprintf(stderr, "Error: %s\n", gsl_strerror(status));
+            break;
+        }
+
+        // Calculate current and resistor voltage
+        double i_t = y[0] / (R * C);
+        double v_r = i_t * R;
+
+        // Write the results to file
+        fprintf(fp, "%g %g %g %g\n", t, y[0], v_r, i_t);
+    }
+
+    // Free memory
+    gsl_odeiv2_evolve_free(evolve);
+    gsl_odeiv2_control_free(control);
+    gsl_odeiv2_step_free(step);
+
+    fclose(fp);
+
+    return 0;
+}
+```
+
+#### RC Circuit Time Calculation
+```c
+#include <stdio.h>
+#include "Circuits/rc_circuit.h"
+
+int main() {
+    // Given values
+    double R = 100; // Resistance in ohms
+    double C = 1e-12; // Capacitance in farads (1 picofarad)
+    double V_final = 5; // Final voltage in volts
+    double V_desired = 3; // Desired voltage in volts
+
+    // Calculate the time to reach the desired voltage
+    double time_in_ps = calculate_time_to_reach_voltage(R, C, V_final, V_desired);
+
+    // Print the result
+    printf("Time to reach %.2fV: %.2f picoseconds\n", V_desired, time_in_ps);
+
+    return 0;
+}
+```
+
+### Graphics
+
+#### 2D Graphics
+```c
+#include "Graphics/graphics2d.h"
+#include <GL/glut.h>
+
+Canvas canvas;
+RGBpixmap pixmap;
+
+void display(void) {
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    // Set window and viewport
+    setCanvasWindow(&canvas, 0, 500, 0, 500);
+    setCanvasViewport(&canvas, 0, 500, 0, 500);
+
+    // Draw a triangle
+    canvasMoveTo(&canvas, 100, 100);
+    canvasLineTo(&canvas, 200, 100);
+    canvasLineTo(&canvas, 150, 200);
+    canvasLineTo(&canvas, 100, 100);
+
+    // Draw a BMP image if it was successfully read
+    if (pixmap.pixel != NULL) {
+        drawRGBpixmap(&pixmap);
+    }
+
+    glFlush();
+}
+
+int main(int argc, char** argv) {
+    // Initialize GLUT
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+    glutInitWindowSize(500, 500);
+    glutInitWindowPosition(100, 100);
+    glutCreateWindow("Graphics2D Test");
+
+    // Set up the display function
+    glutDisplayFunc(display);
+
+    // Initialize the canvas
+    initCanvas(&canvas, 500, 500, "Canvas");
+
+    // Read a BMP file into the pixmap
+    if (!readBMPFile(&pixmap, "example.bmp")) {
+        printf("Failed to read BMP file\n");
+    }
+
+    // Start the GLUT main loop
+    glutMainLoop();
+
+    // Free the pixmap memory
+    freeRGBpixmap(&pixmap);
+
+    return 0;
+}
+```
+
+#### 2D Graphics (Main Game Loop)
+```c
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+#include "Graphics/graphics2d.h"
+#include "Graphics/graphics_app2D.h"
+
+
+int main() {
+    // Initialize GLFW
+    if (!glfwInit()) {
+        fprintf(stderr, "Failed to initialize GLFW\n");
+        return -1;
+    }
+
+    // Create a GLFW window
+    GLFWwindow* window = glfwCreateWindow(800, 600, "2D Graphics Window", NULL, NULL);
+    if (!window) {
+        fprintf(stderr, "Failed to create GLFW window\n");
+        glfwTerminate();
+        return -1;
+    }
+
+    // Make the window's context current
+    glfwMakeContextCurrent(window);
+
+    // Initialize GLEW
+    if (glewInit() != GLEW_OK) {
+        fprintf(stderr, "Failed to initialize GLEW\n");
+        return -1;
+    }
+
+    // Set the viewport
+    glViewport(0, 0, 800, 600);
+
+    // Set the clear color
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+
+    // Initialize graphics
+    initGraphics();
+
+    // Main game loop
+    while (!glfwWindowShouldClose(window)) {
+        // Poll for and process events
+        glfwPollEvents();
+
+        // Render scene
+        render();
+    }
+
+    // Cleanup and exit
+    glfwDestroyWindow(window);
+    glfwTerminate();
+
+    return 0;
+}
 
 ```
