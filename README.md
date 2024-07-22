@@ -1856,10 +1856,8 @@ return 0;
 }
 ```
 
-#### Oriented Rectangle
+#### Point in Circle
 ```c
-// main.c
-
 #include "geometry.h"
 #include <stdio.h>
 
@@ -2003,4 +2001,218 @@ printf("The oriented rectangles do not overlap.\n");
 
 return 0;
 }
+```
+
+#### TODO
+```c
+#include "Geometry/geometry.h"
+#include <stdio.h>
+
+int main() {
+    Vector v1 = {1.0f, 2.0f};
+    Vector v2 = {3.0f, 4.0f};
+    Vector v3 = {1.0f, 2.0f, 3.0f};
+    Vector v4 = {4.0f, 5.0f, 6.0f};
+
+    Vector v2_add = Vector_add(&v1, &v2);
+    Vector v3_add = Vector_add(&v3, &v4);
+
+    printf("Vector add: (%f, %f)\n", v2_add.x, v2_add.y);
+    printf("Vector add: (%f, %f, %f)\n", v3_add.x, v3_add.y, v3_add.z);
+
+    Vector v2_sub = Vector_sub(&v1, &v2);
+    Vector v3_sub = Vector_sub(&v3, &v4);
+
+    printf("Vector sub: (%f, %f)\n", v2_sub.x, v2_sub.y);
+    printf("Vector sub: (%f, %f, %f)\n", v3_sub.x, v3_sub.y, v3_sub.z);
+
+    Vector v2_mul = Vector_mul(&v1, &v2);
+    Vector v3_mul = Vector_mul(&v3, &v4);
+
+    printf("Vector mul: (%f, %f)\n", v2_mul.x, v2_mul.y);
+    printf("Vector mul: (%f, %f, %f)\n", v3_mul.x, v3_mul.y, v3_mul.z);
+
+    Vector v2_mul_scalar = Vector_mul_scalar(&v1, 2.0f);
+    Vector v3_mul_scalar = Vector_mul_scalar(&v3, 2.0f);
+
+    printf("Vector mul scalar: (%f, %f)\n", v2_mul_scalar.x, v2_mul_scalar.y);
+    printf("Vector mul scalar: (%f, %f, %f)\n", v3_mul_scalar.x, v3_mul_scalar.y, v3_mul_scalar.z);
+
+    printf("Vector eq: %d\n", Vector_eq(&v1, &v2));
+    printf("Vector eq: %d\n", Vector_eq(&v3, &v4));
+
+    printf("Vector neq: %d\n", Vector_neq(&v1, &v2));
+    printf("Vector neq: %d\n", Vector_neq(&v3, &v4));
+
+    return 0;
+}
+```
+
+#### TODO
+```c
+#include "Geometry/geometry.h"
+#include <stdio.h>
+
+int main() {
+Vector v1 = {1.0f, 2.0f};
+Vector v2 = {3.0f, 4.0f};
+Vector v3 = {1.0f, 2.0f, 3.0f};
+Vector v4 = {4.0f, 5.0f, 6.0f};
+
+Vector v2_add = Vector_add(&v1, &v2);
+Vector v3_add = Vector_add(&v3, &v4);
+
+printf("Vector add: (%f, %f)\n", v2_add.x, v2_add.y);
+printf("Vector add: (%f, %f, %f)\n", v3_add.x, v3_add.y, v3_add.z);
+
+Vector v2_sub = Vector_sub(&v1, &v2);
+Vector v3_sub = Vector_sub(&v3, &v4);
+
+printf("Vector sub: (%f, %f)\n", v2_sub.x, v2_sub.y);
+printf("Vector sub: (%f, %f, %f)\n", v3_sub.x, v3_sub.y, v3_sub.z);
+
+Vector v2_mul = Vector_mul(&v1, &v2);
+Vector v3_mul = Vector_mul(&v3, &v4);
+
+printf("Vector mul: (%f, %f)\n", v2_mul.x, v2_mul.y);
+printf("Vector mul: (%f, %f, %f)\n", v3_mul.x, v3_mul.y, v3_mul.z);
+
+Vector v2_mul_scalar = Vector_mul_scalar(&v1, 2.0f);
+Vector v3_mul_scalar = Vector_mul_scalar(&v3, 2.0f);
+
+printf("Vector mul scalar: (%f, %f)\n", v2_mul_scalar.x, v2_mul_scalar.y);
+printf("Vector mul scalar: (%f, %f, %f)\n", v3_mul_scalar.x, v3_mul_scalar.y, v3_mul_scalar.z);
+
+printf("Vector eq: %d\n", Vector_eq(&v1, &v2));
+printf("Vector eq: %d\n", Vector_eq(&v3, &v4));
+
+printf("Vector neq: %d\n", Vector_neq(&v1, &v2));
+printf("Vector neq: %d\n", Vector_neq(&v3, &v4));
+
+float dot_v2 = dot_Vector(&v1, &v2);
+float dot_v3 = dot_Vector(&v3, &v4);
+
+printf("dot Vector: %f\n", dot_v2);
+printf("dot Vector: %f\n", dot_v3);
+
+float mag_v2 = magnitude_Vector(&v1);
+float mag_v3 = magnitude_Vector(&v3);
+
+printf("magnitude Vector: %f\n", mag_v2);
+printf("magnitude Vector: %f\n", mag_v3);
+
+float dist_v3 = distance_Vector(&v3, &v4);
+
+printf("distance Vector: %f\n", dist_v3);
+
+Vector norm_v2 = normalized_Vector(&v1);
+Vector norm_v3 = normalized_Vector(&v3);
+
+printf("normalized Vector: (%f, %f)\n", norm_v2.x, norm_v2.y);
+printf("normalized Vector: (%f, %f, %f)\n", norm_v3.x, norm_v3.y, norm_v3.z);
+
+Vector cross_v3 = cross_Vector(&v3, &v4);
+
+printf("cross Vector: (%f, %f, %f)\n", cross_v3.x, cross_v3.y, cross_v3.z);
+
+float angle_v2 = angle_Vector(&v1, &v2);
+float angle_v3 = angle_Vector(&v3, &v4);
+
+printf("angle Vector: %f\n", angle_v2);
+printf("angle Vector: %f\n", angle_v3);
+
+Vector proj_v2 = project_Vector(&v1, &v2);
+Vector proj_v3 = project_Vector(&v3, &v4);
+
+printf("project Vector: (%f, %f)\n", proj_v2.x, proj_v2.y);
+printf("project Vector: (%f, %f, %f)\n", proj_v3.x, proj_v3.y, proj_v3.z);
+
+Vector perp_v2 = perpendicular_Vector(&v1, &v2);
+Vector perp_v3 = perpendicular_Vector(&v3, &v4);
+
+printf("perpendicular Vector: (%f, %f)\n", perp_v2.x, perp_v2.y);
+printf("perpendicular Vector: (%f, %f, %f)\n", perp_v3.x, perp_v3.y, perp_v3.z);
+
+Vector refl_v2 = reflection_Vector(&v1, &v2);
+Vector refl_v3 = reflection_Vector(&v3, &v4);
+
+printf("reflection Vector: (%f, %f)\n", refl_v2.x, refl_v2.y);
+printf("reflection Vector: (%f, %f, %f)\n", refl_v3.x, refl_v3.y, refl_v3.z);
+
+return 0;
+}
+```
+
+#### TODO
+```c
+#include <stdio.h>
+#include "Geometry/geometry.h"
+#include "Utils/utils.h"
+
+
+int main() {
+    // Define test matrices
+    mat2 matA2 = {1.0f, 2.0f, 3.0f, 4.0f};
+    mat2 matB2 = {5.0f, 6.0f, 7.0f, 8.0f};
+    mat3 matA3 = {1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f};
+    mat3 matB3 = {9.0f, 8.0f, 7.0f, 6.0f, 5.0f, 4.0f, 3.0f, 2.0f, 1.0f};
+    mat4 matA4 = {1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f};
+    mat4 matB4 = {16.0f, 15.0f, 14.0f, 13.0f, 12.0f, 11.0f, 10.0f, 9.0f, 8.0f, 7.0f, 6.0f, 5.0f, 4.0f, 3.0f, 2.0f, 1.0f};
+
+    // Print original matrices
+    printf("Original mat2 A:\n");
+    printMat2(&matA2);
+    printf("Original mat3 A:\n");
+    printMat3(&matA3);
+    printf("Original mat4 A:\n");
+    printMat4(&matA4);
+
+    // Transpose matrices
+    mat2 transposed2 = Transpose2(&matA2);
+    mat3 transposed3 = Transpose3(&matA3);
+    mat4 transposed4 = Transpose4(&matA4);
+
+    printf("\nTransposed mat2 A:\n");
+    printMat2(&transposed2);
+    printf("\nTransposed mat3 A:\n");
+    printMat3(&transposed3);
+    printf("\nTransposed mat4 A:\n");
+    printMat4(&transposed4);
+
+    // Multiply matrices
+    mat2 multiplied2 = mat2_mult(&matA2, &matB2);
+    mat3 multiplied3 = mat3_mult(&matA3, &matB3);
+    mat4 multiplied4 = mat4_mult(&matA4, &matB4);
+
+    printf("\nMultiplied mat2 A * B:\n");
+    printMat2(&multiplied2);
+    printf("\nMultiplied mat3 A * B:\n");
+    printMat3(&multiplied3);
+    printf("\nMultiplied mat4 A * B:\n");
+    printMat4(&multiplied4);
+
+    // Determinant
+    float det2 = Determinant_mat2(&matA2);
+    float det3 = Determinant_mat3(&matA3);
+    float det4 = Determinant_mat4(&matA4);
+
+    printf("\nDeterminant of mat2 A: %f\n", det2);
+    printf("Determinant of mat3 A: %f\n", det3);
+    printf("Determinant of mat4 A: %f\n", det4);
+
+    // Inverse
+    mat2 inverse2 = Inverse_mat2(&matA2);
+    mat3 inverse3 = Inverse_mat3(&matA3);
+    mat4 inverse4 = Inverse_mat4(&matA4);
+
+    printf("\nInverse of mat2 A:\n");
+    printMat2(&inverse2);
+    printf("\nInverse of mat3 A:\n");
+    printMat3(&inverse3);
+    printf("\nInverse of mat4 A:\n");
+    printMat4(&inverse4);
+
+    return 0;
+}
+
 ```
