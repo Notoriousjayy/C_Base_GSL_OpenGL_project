@@ -1588,5 +1588,419 @@ int main() {
 
     return 0;
 }
+```
 
+#### TODO: NAME
+```c
+#include <stdio.h>
+#include "geometry.h"
+
+int main()
+{
+    Point P0 = {0, 0, 0};
+    Point P1 = {1, 1, 0};
+    Point P2 = {2, 2, 0};
+
+    printf("isLeft: %d\n", isLeft(P0, P1, P2));
+
+    Point V0 = {0, 0, 0};
+    Point V1 = {1, 0, 0};
+    Point V2 = {0, 1, 0};
+
+    printf("orientation2D_Triangle: %d\n", orientation2D_Triangle(V0, V1, V2));
+    printf("area2D_Triangle: %f\n", area2D_Triangle(V0, V1, V2));
+
+    Point polygon[] = {
+            {0, 0, 0},
+            {4, 0, 0},
+            {4, 4, 0},
+            {0, 4, 0},
+            {0, 0, 0}
+    };
+
+    printf("orientation2D_Polygon: %d\n", orientation2D_Polygon(4, polygon));
+    printf("area2D_Polygon: %f\n", area2D_Polygon(4, polygon));
+
+    Point N = {0, 0, 1};
+    printf("area3D_Polygon: %f\n", area3D_Polygon(4, polygon, N));
+
+    return 0;
+}
+```
+
+#### TODO: NAME
+```c
+#include <stdio.h>
+#include "geometry.h"
+
+int main() {
+    Point points[] = { {1.0, 2.0, 0}, {2.0, 3.0, 0}, {3.0, 4.0, 0} };
+    Line line = { {0.0, 0.0, 0}, {1.0, 1.0, 0} };
+    Segment segment = { {0.0, 0.0, 0}, {1.0, 1.0, 0} };
+    int n = sizeof(points) / sizeof(points[0]);
+
+    int closestIndex = closest2D_Point_to_Line(points, n, line);
+    printf("Closest point to line is at index: %d\n", closestIndex);
+
+    Point P = {2.0, 2.0, 0};
+    float distanceToLine = dist_Point_to_Line(P, line);
+    printf("Distance from point to line: %f\n", distanceToLine);
+
+    float distanceToSegment = dist_Point_to_Segment(P, segment);
+    printf("Distance from point to segment: %f\n", distanceToSegment);
+
+    return 0;
+}
+```
+
+#### TODO: NAME
+```c
+#include <stdio.h>
+#include "geometry.h"
+
+int main() {
+    // Example usage
+    Point polygon[] = {{0, 0}, {5, 0}, {5, 5}, {0, 5}, {0, 0}};
+    Point testPoint = {3, 3};
+
+    int cn_result = cn_PnPoly(testPoint, polygon, 4);
+    int wn_result = wn_PnPoly(testPoint, polygon, 4);
+
+    printf("Crossing Number Test: %d\n", cn_result);
+    printf("Winding Number Test: %d\n", wn_result);
+
+    return 0;
+}
+```
+#### TODO: NAME
+```c
+#include <stdio.h>
+#include "geometry.h"
+
+// Example usage
+int main() {
+    Point P = {1.0, 2.0, 3.0};
+    Plane PL = {{0.0, 0.0, 0.0}, {0.0, 0.0, 1.0}};
+    Point B;
+
+    float distance = dist_Point_to_Plane(P, PL, &B);
+    printf("Distance: %f\n", distance);
+    printf("Base Point: (%f, %f, %f)\n", B.x, B.y, B.z);
+
+    return 0;
+}
+```
+
+#### TODO: NAME
+```c
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+#include "Graphics/graphics2d.h"
+
+void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+void processInput(GLFWwindow *window);
+
+int main() {
+    // Initialize GLFW
+    if (!glfwInit()) {
+        fprintf(stderr, "Failed to initialize GLFW\n");
+        return -1;
+    }
+
+    // Create a GLFW window
+    GLFWwindow* window = glfwCreateWindow(800, 600, "OpenGL Window", NULL, NULL);
+    if (!window) {
+        fprintf(stderr, "Failed to create GLFW window\n");
+        glfwTerminate();
+        return -1;
+    }
+
+    // Make the window's context current
+    glfwMakeContextCurrent(window);
+
+    // Initialize GLEW
+    if (glewInit() != GLEW_OK) {
+        fprintf(stderr, "Failed to initialize GLEW\n");
+        return -1;
+    }
+
+    // Set the viewport
+    glViewport(0, 0, 800, 600);
+
+    // Set the clear color
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+
+    // Initialize Canvas
+    Canvas canvas;
+    initCanvas(&canvas, 800, 600, "OpenGL Window");
+
+    // Set the viewport and projection
+    setCanvasViewport(&canvas, 0, 800, 0, 600);
+    setCanvasWindow(&canvas, -1.0f, 1.0f, -1.0f, 1.0f);
+
+    // Set the framebuffer size callback
+    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+
+    // Main game loop
+    while (!glfwWindowShouldClose(window)) {
+        // Process input
+        processInput(window);
+
+        // Clear the screen
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        // Drawing commands using the Canvas functions
+        drawLine(0.0, 0.0, 1.0, 1.0);
+        drawCircle(0.5, 0.5, 0.3);
+        drawFilledCircle(-0.5, -0.5, 0.3);
+        drawRectangle(-0.5, 0.5, 0.4, 0.2);
+        drawFilledRectangle(0.5, -0.5, 0.4, 0.2);
+
+        // Swap buffers and poll events
+        glfwSwapBuffers(window);
+        glfwPollEvents();
+    }
+
+    // Cleanup and exit
+    glfwDestroyWindow(window);
+    glfwTerminate();
+
+    return 0;
+}
+
+void processInput(GLFWwindow *window) {
+    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, 1);
+}
+
+void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
+    glViewport(0, 0, width, height);
+}
+```
+
+#### Circle
+```c
+#include <stdio.h>
+#include "geometry.h"
+#include "Utils/utils.h"
+
+int main() {
+    // Create two circles
+    Circle c1 = { {{0.0f, 0.0f}, {1.0f, 1.0f}}, 5.0f };
+    Circle c2 = { {{0.0f, 0.0f}, {1.0f, 1.0f}}, 5.0f };
+
+    // Print circles
+    printCircle(&c1);
+    printCircle(&c2);
+
+    // Compare circles
+    if (compareCircles(&c1, &c2)) {
+        printf("The circles are equal.\n");
+    } else {
+        printf("The circles are not equal.\n");
+    }
+
+    return 0;
+}
+```
+
+#### Rectangle
+```c
+#include "geometry.h"
+#include <stdio.h>
+
+void printRectangle2D(const Rectangle2D* rect) {
+    printf("Rectangle Origin: (%.2f, %.2f), Size: (%.2f, %.2f)\n",
+           rect->origin.x, rect->origin.y, rect->size.x, rect->size.y);
+}
+
+int main() {
+    Rectangle2D rect1;
+    initRectangle2D(&rect1);
+
+    Point origin = {2.0f, 3.0f};
+    Vector size = {4.0f, 5.0f};
+    Rectangle2D rect2;
+    initRectangle2DWithValues(&rect2, &origin, &size);
+
+    printRectangle2D(&rect1);
+    printRectangle2D(&rect2);
+
+    return 0;
+}
+```
+#### Oriented Rectangle
+```c
+#include "geometry.h"
+#include <stdio.h>
+
+void printOrientedRectangle(const OrientedRectangle* rect) {
+printf("Oriented Rectangle Position: (%.2f, %.2f), Half Extents: (%.2f, %.2f), Rotation: %.2f\n",
+rect->position.x, rect->position.y, rect->halfExtents.x, rect->halfExtents.y, rect->rotation);
+}
+
+int main() {
+OrientedRectangle rect1;
+initOrientedRectangle(&rect1);
+
+Point position = {2.0f, 3.0f};
+Vector halfExtents = {4.0f, 5.0f};
+float rotation = 45.0f;
+OrientedRectangle rect2;
+initOrientedRectangleWithParams(&rect2, &position, &halfExtents, rotation);
+
+printOrientedRectangle(&rect1);
+printOrientedRectangle(&rect2);
+
+return 0;
+}
+```
+
+#### Oriented Rectangle
+```c
+// main.c
+
+#include "geometry.h"
+#include <stdio.h>
+
+int main() {
+Point point = {1.0f, 1.0f};
+Circle circle = {{0.0f, 0.0f}, 2.0f};
+Rectangle2D rectangle = {{0.0f, 0.0f}, {3.0f, 3.0f}};
+OrientedRectangle orientedRectangle = {{0.0f, 0.0f}, {3.0f, 3.0f}, 0.0f};
+
+if (PointInCircle(&point, &circle)) {
+printf("Point is inside the circle.\n");
+} else {
+printf("Point is outside the circle.\n");
+}
+
+if (PointInRectangle(&point, &rectangle)) {
+printf("Point is inside the rectangle.\n");
+} else {
+printf("Point is outside the rectangle.\n");
+}
+
+if (PointInOrientedRectangle(&point, &orientedRectangle)) {
+printf("Point is inside the oriented rectangle.\n");
+} else {
+printf("Point is outside the oriented rectangle.\n");
+}
+
+return 0;
+}
+```
+
+#### Circle to circle collision
+```c
+#include "geometry.h"
+#include <stdio.h>
+
+int main() {
+Circle circle1 = {{0.0f, 0.0f}, 2.0f};
+Circle circle2 = {{3.0f, 0.0f}, 2.0f};
+
+if (CircleCircle(&circle1, &circle2)) {
+printf("The circles intersect.\n");
+} else {
+printf("The circles do not intersect.\n");
+}
+
+return 0;
+}
+```
+
+#### Circle to Rectangle collision
+```c
+#include "geometry.h"
+#include <stdio.h>
+
+int main() {
+Circle circle = {{{2.0f, 3.0f, 0.0f}, {2.0f, 3.0f, 0.0f}}, 1.0f};
+Rectangle2D rect = {{0.0f, 0.0f, 0.0f}, {4.0f, 4.0f, 0.0f}};
+
+if (CircleRectangle(&circle, &rect)) {
+printf("The circle intersects with the rectangle.\n");
+} else {
+printf("The circle does not intersect with the rectangle.\n");
+}
+
+return 0;
+}
+```
+
+#### Circle to Oriented Rectangle collision
+```c
+#include "geometry.h"
+#include <stdio.h>
+
+int main() {
+Circle circle = {{{2.0f, 3.0f, 0.0f}, {2.0f, 3.0f, 0.0f}}, 1.0f};
+OrientedRectangle rect = {{0.0f, 0.0f, 0.0f}, {4.0f, 4.0f, 0.0f}, 45.0f};
+
+if (CircleOrientedRectangle(&circle, &rect)) {
+printf("The circle intersects with the oriented rectangle.\n");
+} else {
+printf("The circle does not intersect with the oriented rectangle.\n");
+}
+
+return 0;
+}
+```
+
+#### Rectangle to Rectangle collision
+```c
+#include "geometry.h"
+#include <stdio.h>
+
+int main() {
+    Rectangle2D rect1 = {{0.0f, 0.0f, 0.0f}, {4.0f, 4.0f, 0.0f}};
+    Rectangle2D rect2 = {{2.0f, 2.0f, 0.0f}, {4.0f, 4.0f, 0.0f}};
+
+    if (RectangleRectangle(&rect1, &rect2)) {
+        printf("The rectangles overlap.\n");
+    } else {
+        printf("The rectangles do not overlap.\n");
+    }
+
+    return 0;
+}
+```
+
+#### Rectangle to Oriented Rectangle collision
+```c
+#include "geometry.h"
+#include <stdio.h>
+
+int main() {
+Rectangle2D rect1 = {{0.0f, 0.0f, 0.0f}, {4.0f, 4.0f, 0.0f}};
+OrientedRectangle rect2 = {{2.0f, 2.0f, 0.0f}, {2.0f, 2.0f, 0.0f}, 45.0f};
+
+if (RectangleOrientedRectangle(&rect1, &rect2)) {
+printf("The rectangles overlap.\n");
+} else {
+printf("The rectangles do not overlap.\n");
+}
+
+return 0;
+}
+```
+
+#### Rectangle to Oriented Rectangle collision
+```c
+#include "geometry.h"
+#include <stdio.h>
+
+int main() {
+OrientedRectangle rect1 = {{0.0f, 0.0f, 0.0f}, {2.0f, 2.0f, 0.0f}, 30.0f};
+OrientedRectangle rect2 = {{3.0f, 3.0f, 0.0f}, {2.0f, 2.0f, 0.0f}, 45.0f};
+
+if (OrientedRectangleOrientedRectangle(&rect1, &rect2)) {
+printf("The oriented rectangles overlap.\n");
+} else {
+printf("The oriented rectangles do not overlap.\n");
+}
+
+return 0;
+}
 ```

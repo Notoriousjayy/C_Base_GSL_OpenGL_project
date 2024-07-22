@@ -8,6 +8,56 @@
 #include <math.h>
 #include <stdio.h>
 
+
+// Drawing functions
+void drawLine(double x0, double y0, double x1, double y1) {
+    glBegin(GL_LINES);
+    glVertex2d(x0, y0);
+    glVertex2d(x1, y1);
+    glEnd();
+}
+
+void drawCircle(double x, double y, double r) {
+    glBegin(GL_LINE_LOOP);
+    for (int i = 0; i < 360; i++) {
+        double theta = i * 3.1415926 / 180;
+        double cx = r * cos(theta);
+        double cy = r * sin(theta);
+        glVertex2d(x + cx, y + cy);
+    }
+    glEnd();
+}
+
+void drawFilledCircle(double x, double y, double r) {
+    glBegin(GL_TRIANGLE_FAN);
+    glVertex2d(x, y);
+    for (int i = 0; i <= 360; i++) {
+        double theta = i * 3.1415926 / 180;
+        double cx = r * cos(theta);
+        double cy = r * sin(theta);
+        glVertex2d(x + cx, y + cy);
+    }
+    glEnd();
+}
+
+void drawRectangle(double x, double y, double width, double height) {
+    glBegin(GL_LINE_LOOP);
+    glVertex2d(x, y);
+    glVertex2d(x + width, y);
+    glVertex2d(x + width, y + height);
+    glVertex2d(x, y + height);
+    glEnd();
+}
+
+void drawFilledRectangle(double x, double y, double width, double height) {
+    glBegin(GL_QUADS);
+    glVertex2d(x, y);
+    glVertex2d(x + width, y);
+    glVertex2d(x + width, y + height);
+    glVertex2d(x, y + height);
+    glEnd();
+}
+
 // IntPoint functions
 void setIntPoint(IntPoint* p, int dx, int dy) {
     p->x = dx;

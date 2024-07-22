@@ -43,6 +43,13 @@ typedef struct {
     float windowAspect;
 } Canvas;
 
+// Function prototypes for drawing functions
+void drawLine(double x0, double y0, double x1, double y1);
+void drawCircle(double x, double y, double r);
+void drawFilledCircle(double x, double y, double r);
+void drawRectangle(double x, double y, double width, double height);
+void drawFilledRectangle(double x, double y, double width, double height);
+
 // IntPoint functions
 void setIntPoint(IntPoint* p, int dx, int dy);
 void setIntPointFromPoint(IntPoint* p, IntPoint* src);
