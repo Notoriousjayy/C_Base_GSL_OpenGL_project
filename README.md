@@ -121,6 +121,66 @@ int main() {
 
     return 0;
 }
+```
+
+#### TODO
+```c
+#include "Graph/graph_io.h"
+
+int main() {
+    // Test imap_chr and imap_ord
+    char test_char = imap_chr(65);
+    printf("imap_chr(65) = %c\n", test_char);
+
+    long test_ord = imap_ord('A');
+    printf("imap_ord('A') = %ld\n", test_ord);
+
+    // Test graph_newline
+    graph_newline();
+    printf("graph_newline() called\n");
+
+    // Test new_checksum
+    char* test_str = "Hello, World!";
+    long checksum = new_checksum(test_str, 0);
+    printf("new_checksum(\"%s\", 0) = %ld\n", test_str, checksum);
+
+    // Test graph_eof
+    long eof = graph_eof();
+    printf("graph_eof() = %ld\n", eof);
+
+    // Test graph_char
+    char next_char = graph_char();
+    printf("graph_char() = %c\n", next_char);
+
+    // Test graph_backup
+    graph_backup();
+    printf("graph_backup() called\n");
+
+    // Test graph_digit
+    long digit = graph_digit('5');
+    printf("graph_digit('5') = %ld\n", digit);
+
+    // Test graph_number
+    unsigned long number = graph_number('5');
+    printf("graph_number('5') = %lu\n", number);
+
+    // Test graph_string
+    char* result_str = graph_string(str_buf, '!');
+    printf("graph_string(str_buf, '!') = %s\n", result_str);
+
+    // Test graph_raw_open and graph_open
+    graph_raw_open("testfile.txt");
+    printf("graph_raw_open(\"testfile.txt\") called\n");
+
+    long open_result = graph_open("testfile.txt");
+    printf("graph_open(\"testfile.txt\") = %ld\n", open_result);
+
+    // Test graph_close
+    long close_result = graph_close();
+    printf("graph_close() = %ld\n", close_result);
+
+    return 0;
+}
 
 ```
 
