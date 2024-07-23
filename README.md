@@ -2,6 +2,128 @@
 
 ## Usage/Examples
 
+### Graph
+
+#### TODO
+```c
+#include <string.h>
+#include "Graph/graph.h"
+
+int main() {
+    // Initialize area for memory allocation
+    Area area;
+    init_area(area);
+
+    // Create a new graph with 3 vertices
+    Graph *g = new_graph(3);
+
+    // Allocate memory for vertex names
+    Vertex *v1 = &g->vertices[0];
+    Vertex *v2 = &g->vertices[1];
+    Vertex *v3 = &g->vertices[2];
+
+    // Assign names to the vertices
+    v1->name = save_string("Vertex 1");
+    v2->name = save_string("Vertex 2");
+    v3->name = save_string("Vertex 3");
+
+    // Add edges between vertices
+    new_edge(v1, v2, 10);  // Edge from Vertex 1 to Vertex 2 with length 10
+    new_edge(v2, v3, 20);  // Edge from Vertex 2 to Vertex 3 with length 20
+    new_edge(v3, v1, 30);  // Edge from Vertex 3 to Vertex 1 with length 30
+
+    // Optionally, set graph ID and utility types
+    snprintf(g->id, ID_FIELD_SIZE, "MyGraph");
+    strncpy(g->util_types, "example", sizeof(g->util_types) - 1);
+
+    // Perform operations on the graph
+    switch_to_graph(g);
+    // Example: look up a vertex by name
+    Vertex *lookup_vertex = hash_lookup("Vertex 2", g);
+    if (lookup_vertex) {
+        printf("Found vertex: %s\n", lookup_vertex->name);
+    } else {
+        printf("Vertex not found\n");
+    }
+
+    // Clean up
+    recycle(g);
+    graph_free(area);
+
+    return 0;
+}
+```
+
+#### TODO
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include "Graph/graph_basic.h"
+#include "Graph/graph.h"
+
+void print_graph(Graph* g, const char* name) {
+    if (g == NULL) {
+        printf("%s: Graph creation failed.\n", name);
+        return;
+    }
+    printf("%s: Graph with %ld vertices and %ld edges.\n", name, g->n, g->m);
+    // Add more detailed printing or visualization of the graph if needed
+    // Example: printing the adjacency matrix or list
+}
+
+int main() {
+    Graph* g;
+
+    // Testing macros for creating specific types of graphs
+    g = complete(5);
+    print_graph(g, "Complete Graph with 5 vertices");
+
+    g = transitive(5);
+    print_graph(g, "Transitive Graph with 5 vertices");
+
+    g = empty(5);
+    print_graph(g, "Empty Graph with 5 vertices");
+
+    g = circuit(5);
+    print_graph(g, "Circuit Graph with 5 vertices");
+
+    g = cycle(5);
+    print_graph(g, "Cycle Graph with 5 vertices");
+
+    // Testing macros for creating graphs using subsets function
+    g = disjoint_subsets(5, 2);
+    print_graph(g, "Disjoint Subsets Graph (5, 2)");
+
+    g = petersen();
+    print_graph(g, "Petersen Graph");
+
+    // Testing macros for creating graphs using perms function
+    g = all_perms(3, 1);
+    print_graph(g, "All Permutations Graph with 3 vertices (directed)");
+
+    // Testing macros for creating graphs using parts function
+    g = all_parts(3, 1);
+    print_graph(g, "All Partitions Graph with 3 vertices (directed)");
+
+    // Testing macros for creating graphs using binary function
+    g = all_trees(3, 1);
+    print_graph(g, "All Trees Graph with 3 vertices (directed)");
+
+    // Testing additional graph creation functions
+    g = bi_complete();
+    print_graph(g, "Bipartite Complete Graph");
+
+    g = wheel();
+    print_graph(g, "Wheel Graph");
+
+    // Free the graph memory if needed (depends on your graph implementation)
+    // Example: free_graph(g);
+
+    return 0;
+}
+
+```
+
 ### Linear Algebra
 
 #### Gaussian elimination (row reduction)
