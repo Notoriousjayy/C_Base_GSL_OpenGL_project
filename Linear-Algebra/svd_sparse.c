@@ -1,7 +1,7 @@
 //
 // Created by jorda on 7/15/2024.
 //
-#include "svd_sparse.h"
+#include "../include/svd_sparse.h"
 #include <stdlib.h>
 #include <math.h>
 #include <float.h>

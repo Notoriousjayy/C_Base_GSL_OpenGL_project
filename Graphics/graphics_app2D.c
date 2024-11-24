@@ -4,8 +4,8 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include "graphics2d.h"
-#include "graphics_app2D.h"
+#include "../include/graphics2d.h"
+#include "../include/graphics_app2D.h"
 
 Canvas canvas;
 

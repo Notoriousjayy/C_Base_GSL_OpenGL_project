@@ -1,7 +1,7 @@
 //
 // Created by jorda on 7/15/2024.
 //
-#include "gaussj.h"
+#include "../include/gaussj.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>

@@ -2,7 +2,7 @@
 // Created by jorda on 7/19/2024.
 //
 
-#include "graphics2d.h"
+#include "../include/graphics2d.h"
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <math.h>

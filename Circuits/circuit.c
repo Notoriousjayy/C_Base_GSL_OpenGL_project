@@ -7,7 +7,7 @@
 #include <math.h>
 #include <gsl/gsl_integration.h>
 #include <gsl/gsl_deriv.h>
-#include "circuit.h"
+#include "../include/circuit.h"
 
 // Define the system of differential equations
 int func(double t, const double y[], double f[], void *params) {

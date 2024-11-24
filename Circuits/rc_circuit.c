@@ -2,7 +2,7 @@
 // Created by jorda on 7/19/2024.
 //
 
-#include "rc_circuit.h"
+#include "../include/rc_circuit.h"
 #include <gsl/gsl_odeiv2.h>
 #include <gsl/gsl_errno.h>
 #include <math.h>

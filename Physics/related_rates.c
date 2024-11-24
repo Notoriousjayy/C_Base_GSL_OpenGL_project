@@ -2,7 +2,7 @@
 #include <gsl/gsl_matrix.h>
 #include <gsl/gsl_vector.h>
 #include <gsl/gsl_linalg.h>
-#include "related_rates.h"
+#include "../include/related_rates.h"
 
 void calculate_current_rate(double V, double R, double dV_dt, double dR_dt) {
     // Calculate current I

@@ -3,7 +3,7 @@
 //
 
 #include <math.h>
-#include "dissipation.h"
+#include "../include/dissipation.h"
 
 #define LN2 0.6931471805599453  // Natural logarithm of 2
 

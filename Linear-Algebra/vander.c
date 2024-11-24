@@ -3,7 +3,7 @@
 //
 
 #include <stdio.h>
-#include "vander.h"
+#include "../include/vander.h"
 
 void vander(const gsl_vector *x, gsl_vector *w, const gsl_vector *q) {
     size_t i, j, k, n = q->size;

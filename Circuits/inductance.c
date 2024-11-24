@@ -2,7 +2,7 @@
 // Created by jorda on 7/19/2024.
 //
 
-#include "inductance.h"
+#include "../include/inductance.h"
 #include <gsl/gsl_math.h>
 #include <gsl/gsl_sf_log.h>
 

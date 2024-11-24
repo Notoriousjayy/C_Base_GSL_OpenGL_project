@@ -4,7 +4,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "toeplz.h"
+#include "../include/toeplz.h"
 
 void toeplz(const gsl_vector *r, gsl_vector *x, const gsl_vector *y) {
     int j, k, m, m1, m2, n1, n = y->size;

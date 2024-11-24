@@ -1,7 +1,7 @@
 //
 // Created by jorda on 7/15/2024.
 //
-#include "bandec.h"
+#include "../include/bandec.h"
 #include <gsl/gsl_linalg.h>
 #include <gsl/gsl_blas.h>
 #include <stdio.h>

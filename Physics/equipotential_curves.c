@@ -4,7 +4,7 @@
 
 #include <stdio.h>
 #include <math.h>
-#include "equipotential_curves.h"
+#include "../include/equipotential_curves.h"
 
 void compute_circle(double radius, double x[], double y[]) {
     for (int i = 0; i < NUM_POINTS; i++) {

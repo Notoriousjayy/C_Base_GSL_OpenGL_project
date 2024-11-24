@@ -8,7 +8,7 @@
 #include <gsl/gsl_math.h>
 #include <gsl/gsl_errno.h>
 #include <gsl/gsl_odeiv2.h>
-#include "barometric_pressure.h"
+#include "../include/barometric_pressure.h"
 
 #define SEA_LEVEL_PRESSURE 30.0  // Pressure at sea level in inches
 #define PRESSURE_AT_18000  15.0  // Pressure at 18000 feet in inches

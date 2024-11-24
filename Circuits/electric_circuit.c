@@ -1,4 +1,4 @@
-#include "electric_circuit.h"
+#include "../include/electric_circuit.h"
 #include <math.h>
 #include <gsl/gsl_errno.h>
 

@@ -3,7 +3,7 @@
 //
 
 #include <gsl/gsl_deriv.h>
-#include "resistance.h"
+#include "../include/resistance.h"
 
 double calculate_parallel_resistance(double R1, double R2) {
     return 1.0 / (1.0 / R1 + 1.0 / R2);

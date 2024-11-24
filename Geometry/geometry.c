@@ -1,6 +1,6 @@
 // geometry.c
 
-#include "geometry.h"
+#include "../include/geometry.h"
 #include <stdio.h>
 
 int isLeft(Point P0, Point P1, Point P2) {

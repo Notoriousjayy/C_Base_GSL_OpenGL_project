@@ -5,7 +5,7 @@
 #include <math.h>
 #include <stdio.h>
 #include <gsl/gsl_errno.h>
-#include "magnetic_potential.h"
+#include "../include/magnetic_potential.h"
 
 // Define the integrand function
 double integrand(double x, void *params) {

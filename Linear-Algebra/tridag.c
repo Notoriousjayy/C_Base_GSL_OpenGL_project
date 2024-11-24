@@ -1,7 +1,7 @@
 //
 // Created by jorda on 7/15/2024.
 //
-#include "tridag.h"
+#include "../include/tridag.h"
 #include <stdio.h>
 #include <stdlib.h>
 

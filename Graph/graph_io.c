@@ -2,7 +2,7 @@
 // Created by jorda on 7/23/2024.
 //
 
-#include "graph_io.h"
+#include "../include/graph_io.h"
 
 /* External variable definitions */
 long io_errors = 0;

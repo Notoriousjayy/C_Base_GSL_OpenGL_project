@@ -5,7 +5,7 @@
 #include <math.h>
 #include <gsl/gsl_errno.h>
 #include <gsl/gsl_odeiv2.h>
-#include "current.h"
+#include "../include/current.h"
 
 // Define the parameters
 const double E0 = 120.0;    // Electromotive force in volts

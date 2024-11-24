@@ -181,6 +181,103 @@ int main() {
 
     return 0;
 }
+```
+#### TODO
+```c
+#include <stdio.h>
+#include "Graph/graph_flip.h"
+
+int main() {
+    // Initialize the random number generator with a seed
+    long seed = 123456789;
+    graph_init_rand(seed);
+
+    // Generate and print a few random numbers using graph_next_rand
+    printf("Random numbers using graph_next_rand:\n");
+    for (int i = 0; i < 10; i++) {
+        printf("%ld ", graph_next_rand());
+    }
+    printf("\n");
+
+    // Generate and print a few uniform random numbers using graph_unif_rand
+    long m = 100;
+    printf("Uniform random numbers between 0 and %ld using graph_unif_rand:\n", m);
+    for (int i = 0; i < 10; i++) {
+        printf("%ld ", graph_unif_rand(m));
+    }
+    printf("\n");
+
+    return 0;
+}
+```
+
+#### TODO
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include "Graph/graph_sort.h"
+#include "Graph/graph_flip.h"
+
+// Function to create a new node
+node* create_node(long key) {
+    node* new_node = (node*)malloc(sizeof(node));
+    new_node->key = key;
+    new_node->link = NULL;
+    return new_node;
+}
+
+// Function to print the sorted list
+void print_sorted_list(node* sorted_array[]) {
+    for (int i = 0; i < 256; ++i) {
+        node* current = sorted_array[i];
+        while (current != NULL) {
+            printf("%ld ", current->key);
+            current = current->link;
+        }
+    }
+    printf("\n");
+}
+
+// Main function to test graph_linksort
+int main() {
+    // Initialize the random number generator
+    graph_init_rand(123456);  // Use a fixed seed for reproducibility
+
+    // Create a linked list with random keys
+    node* head = create_node(15);
+    head->link = create_node(3);
+    head->link->link = create_node(27);
+    head->link->link->link = create_node(1);
+    head->link->link->link->link = create_node(9);
+
+    // Print the original list
+    printf("Original list: ");
+    node* current = head;
+    while (current != NULL) {
+        printf("%ld ", current->key);
+        current = current->link;
+    }
+    printf("\n");
+
+    // Perform the sorting
+    graph_linksort(head);
+
+    // Print the sorted list
+    printf("Sorted list: ");
+    print_sorted_list(graph_sorted);
+
+    // Free the allocated memory
+    for (int i = 0; i < 256; ++i) {
+        current = graph_sorted[i];
+        while (current != NULL) {
+            node* next = current->link;
+            free(current);
+            current = next;
+        }
+    }
+
+    return 0;
+}
 
 ```
 
@@ -2393,6 +2490,214 @@ int main() {
     printMat3(&inverse3);
     printf("\nInverse of mat4 A:\n");
     printMat4(&inverse4);
+
+    return 0;
+}
+
+```
+
+#### Double Framebuffer
+A buffered class encapsulates a buffer: a piece of state that can be modified. This buffer is edited incrementally, but we want all outside code to see the edit as a single atomic change. To do this, the class keeps two instances of the buffer: a next buffer and a current buffer.
+```c
+#include "Graphics/framebuffer.h"
+#include "scene.h"
+#include <GLFW/glfw3.h>
+
+void display(GLFWwindow* window, Scene* scene) {
+    // Draw the scene
+    drawScene(scene);
+
+    // Render the current framebuffer
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f); // White background
+    renderFramebuffer(getCurrentBuffer(scene));
+
+    // Swap front and back buffers
+    glfwSwapBuffers(window);
+}
+
+int main() {
+    // Initialize the library
+    if (!glfwInit()) {
+        return -1;
+    }
+
+    // Create a windowed mode window and its OpenGL context
+    GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Scene Example", NULL, NULL);
+    if (!window) {
+        glfwTerminate();
+        return -1;
+    }
+
+    // Make the window's context current
+    glfwMakeContextCurrent(window);
+
+    // Set the framebuffer swap interval (V-sync)
+    glfwSwapInterval(1);
+
+    // Initialize the scene
+    Scene scene;
+    initScene(&scene);
+
+    // Main loop
+    while (!glfwWindowShouldClose(window)) {
+        // Render the scene
+        display(window, &scene);
+
+        // Poll for and process events
+        glfwPollEvents();
+    }
+
+    glfwDestroyWindow(window);
+    glfwTerminate();
+    return 0;
+}
+```
+
+#### Actor
+```c
+#include "actor.h"
+#include <stdio.h>
+
+// Example update function for an Actor
+void exampleUpdate(Actor* actor) {
+    if (wasActorSlapped(actor)) {
+        printf("Actor was slapped!\n");
+    } else {
+        printf("Actor is calm.\n");
+    }
+    resetActor(actor);
+}
+
+int main() {
+    // Create an Actor and initialize it with the example update function
+    Actor actor;
+    initActor(&actor, exampleUpdate);
+
+    // Simulate actions on the actor
+    slapActor(&actor);
+    actor.update(&actor);  // Call the update function
+
+    return 0;
+}
+```
+
+#### Actor
+```c
+#include "actor.h"
+#include "stage.h"
+#include <stdio.h>
+
+// Example update function for an Actor
+void exampleUpdate(Actor* actor) {
+    if (wasActorSlapped(actor)) {
+        printf("Actor was slapped!\n");
+    } else {
+        printf("Actor is calm.\n");
+    }
+}
+
+// Example reset function for an Actor
+void exampleReset(Actor* actor) {
+    resetActor(actor);  // Reset the slapped state
+}
+
+int main() {
+    // Create a Stage
+    Stage stage;
+    initStage(&stage);
+
+    // Create Actors and set their update and reset functions
+    Actor actor1, actor2, actor3;
+    initActor(&actor1, exampleUpdate);
+    initActor(&actor2, exampleUpdate);
+    initActor(&actor3, exampleUpdate);
+
+    // Set reset functions for the actors
+    actor1.reset = exampleReset;
+    actor2.reset = exampleReset;
+    actor3.reset = exampleReset;
+
+    // Add actors to the stage
+    addActorToStage(&stage, &actor1, 0);
+    addActorToStage(&stage, &actor2, 1);
+    addActorToStage(&stage, &actor3, 2);
+
+    // Slap an actor
+    slapActor(&actor1);
+
+    // Update the stage
+    updateStage(&stage);
+
+    return 0;
+}
+```
+
+#### Actor
+```c
+#include "comedian.h"
+#include "stage.h"
+#include <stdio.h>
+
+// Example update function for a generic Actor
+void genericUpdate(Actor* actor) {
+    if (wasActorSlapped(actor)) {
+        printf("Generic Actor was slapped!\n");
+    } else {
+        printf("Generic Actor is calm.\n");
+    }
+}
+
+int main() {
+    // Create a Stage
+    Stage stage;
+    initStage(&stage);
+
+    // Create a generic Actor and a Comedian
+    Actor actor1;
+    Comedian comedian1;
+
+    // Initialize the generic Actor and Comedian
+    initActor(&actor1, genericUpdate, resetActor);
+    initComedian(&comedian1, &actor1);
+
+    // Add the actors to the stage
+    addActorToStage(&stage, &actor1, 0);
+    addActorToStage(&stage, (Actor*)&comedian1, 1);  // Casting Comedian to Actor
+
+    // Slap the comedian
+    slapActor((Actor*)&comedian1);
+
+    // Update the stage, which will cause the comedian to slap the actor it faces
+    updateStage(&stage);
+
+    return 0;
+}
+```
+
+#### Actor
+```c
+#include "actor.h"
+#include <stdio.h>
+
+// Example update function for a specific Actor type
+void exampleUpdate(Actor* actor) {
+    if (actor->wasSlapped(actor)) {
+        printf("Actor was slapped!\n");
+    } else {
+        printf("Actor is calm.\n");
+    }
+}
+
+int main() {
+    // Create and initialize an Actor instance
+    Actor actor;
+    initActor(&actor, exampleUpdate);
+
+    // Use the Actor
+    actor.slap(&actor);      // Mark the actor as slapped in the next state
+    actor.swap(&actor);      // Swap the slap states
+    actor.update(&actor);    // Update the actor, checking the current state
 
     return 0;
 }

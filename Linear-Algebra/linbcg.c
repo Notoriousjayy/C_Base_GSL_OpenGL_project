@@ -2,7 +2,7 @@
 // Created by jorda on 7/15/2024.
 //
 
-#include "linbcg.h"
+#include "../include/linbcg.h"
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>

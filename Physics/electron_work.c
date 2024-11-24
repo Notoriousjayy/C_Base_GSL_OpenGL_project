@@ -4,7 +4,7 @@
 
 // electron_work.c
 #include <gsl/gsl_integration.h>
-#include "electron_work.h"
+#include "../include/electron_work.h"
 
 #define K_CONSTANT 1.0  // Define the constant k
 

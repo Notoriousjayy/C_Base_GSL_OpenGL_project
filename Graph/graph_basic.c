@@ -1,6 +1,6 @@
 #include <string.h>
-#include "graph.h"
-#include "graph_basic.h"
+#include "../include/graph.h"
+#include "../include/graph_basic.h"
 
 /* Macros for error handling and buffer sizes */
 #define panic(c) \

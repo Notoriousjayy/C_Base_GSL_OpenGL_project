@@ -2,7 +2,7 @@
 // Created by jorda on 7/15/2024.
 //
 
-#include "svd.h"
+#include "../include/svd.h"
 #include <stdlib.h>
 #include <math.h>
 #include <float.h>

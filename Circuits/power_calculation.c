@@ -2,7 +2,7 @@
 // Created by jorda on 7/19/2024.
 //
 
-#include "power_calculation.h"
+#include "../include/power_calculation.h"
 #include <stdio.h>
 
 double calculate_power(double E, double R) {

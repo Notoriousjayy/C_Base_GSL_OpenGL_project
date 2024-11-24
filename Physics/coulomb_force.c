@@ -2,7 +2,7 @@
 // Created by jorda on 7/19/2024.
 //
 
-#include "coulomb_force.h"
+#include "../include/coulomb_force.h"
 #include <gsl/gsl_blas.h>
 #include <math.h>
 

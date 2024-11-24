@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "qrdcmp.h"
+#include "../include/qrdcmp.h"
 
 #define SIGN(a, b) ((b) >= 0.0 ? fabs(a) : -fabs(a))
 #define SQR(x) ((x) * (x))

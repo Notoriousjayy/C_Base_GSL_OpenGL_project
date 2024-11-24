@@ -9,7 +9,7 @@
 #include <gsl/gsl_vector.h>
 #include <gsl/gsl_blas.h>
 #include <gsl/gsl_linalg.h>
-#include "cholesky.h"
+#include "../include/cholesky.h"
 
 void cholesky_decomp(Cholesky *ch, const gsl_matrix *a) {
     int i, j, k;

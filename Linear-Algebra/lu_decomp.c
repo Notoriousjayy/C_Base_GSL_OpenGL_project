@@ -1,7 +1,7 @@
 //
 // Created by jorda on 7/15/2024.
 //
-#include "lu_decomp.h"
+#include "../include/lu_decomp.h"
 #include <stdlib.h>
 #include <math.h>
 #include <gsl/gsl_linalg.h>

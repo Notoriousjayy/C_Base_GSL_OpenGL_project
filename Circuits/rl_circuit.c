@@ -3,7 +3,7 @@
 //
 
 #include <math.h>
-#include "rl_circuit.h"
+#include "../include/rl_circuit.h"
 #include <gsl/gsl_odeiv2.h>
 #include <gsl/gsl_errno.h>
 #include <gsl/gsl_sf_log.h>

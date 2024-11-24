@@ -1,7 +1,7 @@
 //
 // Created by jorda on 7/15/2024.
 //
-#include "utils.h"
+#include "../include/utils.h"
 #include <stdio.h>
 
 void print_matrix(const gsl_matrix *m, const char *name) {
